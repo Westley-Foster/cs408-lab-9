@@ -28,11 +28,10 @@ class Shape {
   }
 }
 
-//EvilCircle class (NOTE TO SELF: might be needed to be put below Ball)
+//EvilCircle class
 class EvilCircle extends Shape {
   constructor(x, y) {
     super(x, y, 20, 20); //passes up the x and y values to Shape and hardcodes velX and velY in shape to 20
-    //NOTE TO SELF: color and size might need to be changed to actually work, don't know yet)
     this.color = "white";
     this.size = 10;
 
@@ -110,13 +109,8 @@ class Ball extends Shape {
   constructor(x, y, velX, velY, color, size) {
     //my added stuff
     super(x, y, velX, velY); //inherits the values x, y, velX, and velY from the Shape class
-    //NOTE TO SELF: might need to put exists below the other parameters color and size
     this.exists = true; //creates a property "exists" that, if true, a ball has not been eaten yet
 
-    // this.x = x;
-    // this.y = y;
-    // this.velX = velX;
-    // this.velY = velY;
     this.color = color;
     this.size = size;
   }
@@ -186,9 +180,19 @@ while (balls.length < 25) {
   balls.push(ball);
 }
 
-//creates an EvilCircle character in the middle of the screen (fixed with ChatGPT my old code was:)
-//const evilCircle = new EvilCircle(this.x, this.y);
+//creates an EvilCircle character in the middle of the screen (fixed with ChatGPT)
+//my old code: const evilCircle = new EvilCircle(this.x, this.y);
 const evilCircle = new EvilCircle(width / 2, height / 2);
+
+//create a variable that stores a reference to the paragraph.
+const paragraph = document.getElementById("ball-count");
+
+//keeps a count of the number of balls on screen and increments and decrements the ball count
+function updateBallCount() {
+  const ballCount = balls.filter(ball => ball.exists).length; //referenced by ChatGPT and developer.mozilla.org
+  paragraph.textContent = `Ball Count: ${ballCount}`;
+  canvas.setAttribute("aria-label", paragraph);
+}
 
 function loop() {
   ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
@@ -205,6 +209,8 @@ function loop() {
   evilCircle.draw();
   evilCircle.checkBounds();
   evilCircle.collisionDetect();
+
+  updateBallCount();
 
   requestAnimationFrame(loop);
 }
