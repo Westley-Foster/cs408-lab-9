@@ -22,3 +22,9 @@ A simple bulleted list below is sufficient. For example:
 - Icons: https://fontawesome.com/
 - Fonts: https://fonts.google.com/
 - etc.
+
+- Building constructors and creating an object with those constructors: https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Object_basics#introducing_constructors
+- strokeStyle(), stroke(), and lineWidth(): https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Client-side_APIs/Drawing_graphics
+- checkBounds() in EvilCircle class: ChatGPT
+- collisionDetect() in EvilCircle class: ChatGPT
+- Correctly spawning in the EvilCircle: ChatGPT

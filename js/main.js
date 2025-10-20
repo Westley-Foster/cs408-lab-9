@@ -33,7 +33,7 @@ class EvilCircle extends Shape {
   constructor(x, y) {
     super(x, y, 20, 20); //passes up the x and y values to Shape and hardcodes velX and velY in shape to 20
     //NOTE TO SELF: color and size might need to be changed to actually work, don't know yet)
-    this.color = white;
+    this.color = "white";
     this.size = 10;
 
     //adds an Event Listener to allow player movement
@@ -56,6 +56,53 @@ class EvilCircle extends Shape {
           break;
       }
     });
+  }
+
+  draw() {
+    ctx.beginPath();
+    ctx.strokeStyle = this.color; //changed fillStyle to strokeStyle
+    ctx.lineWidth = 3; //thickens the line to see the circle easier
+    ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
+    ctx.stroke(); //changed fill to stroke
+  }
+
+  //changes the x/y values to bounce the EvilCircle back into the screen if it hits the screen's bounds
+  //updated with the help of ChatGPT
+  checkBounds() {
+    if(this.x + this.size >= width) {
+      this.x = width - this.size; // push back from right edge
+    }
+
+    if(this.x - this.size <= 0) {
+      this.x = this.size; // push away from left edge
+    }
+
+    if(this.y + this.size >= height) {
+      this.y = height - this.size; // push up from bottom edge
+    }
+
+    if(this.y - this.size <= 0) {
+      this.y = this.size; // push down from top edge
+    }
+  }
+
+  //written with help from ChatGPT
+  collisionDetect() {
+    //detects a collision only if a ball exists
+    for(const ball of balls) {
+      //if a ball doesn't exist, it's been eaten, so do nothing
+      if(!ball.exists) {
+        continue
+      }
+
+      const dx = this.x - ball.x;
+      const dy = this.y - ball.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      if(distance < this.size + ball.size) {
+        ball.exists = false;
+      }
+    }
   }
 }
 
@@ -81,6 +128,7 @@ class Ball extends Shape {
     ctx.fill();
   }
 
+  //updates the velocities of balls so that they bounce in the opposite direction of the screen's bounds
   update() {
     if (this.x + this.size >= width) {
       this.velX = -Math.abs(this.velX);
@@ -138,15 +186,25 @@ while (balls.length < 25) {
   balls.push(ball);
 }
 
+//creates an EvilCircle character in the middle of the screen (fixed with ChatGPT my old code was:)
+//const evilCircle = new EvilCircle(this.x, this.y);
+const evilCircle = new EvilCircle(width / 2, height / 2);
+
 function loop() {
   ctx.fillStyle = "rgba(0, 0, 0, 0.25)";
   ctx.fillRect(0, 0, width, height);
 
   for (const ball of balls) {
-    ball.draw();
-    ball.update();
-    ball.collisionDetect();
+    if(ball.exists) {
+      ball.draw();
+      ball.update();
+      ball.collisionDetect();
+    }
   }
+
+  evilCircle.draw();
+  evilCircle.checkBounds();
+  evilCircle.collisionDetect();
 
   requestAnimationFrame(loop);
 }
