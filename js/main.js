@@ -99,6 +99,8 @@ class EvilCircle extends Shape {
       const distance = Math.sqrt(dx * dx + dy * dy);
 
       if(distance < this.size + ball.size) {
+        //added ball increase size for fun
+        this.size += ball.size; //makes the EvilCircle grow bigger in proportion to the size of the ball it eats
         ball.exists = false;
       }
     }
