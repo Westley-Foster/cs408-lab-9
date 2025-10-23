@@ -1,5 +1,8 @@
 # CS408 - Lab9.2
 
+Westley Foster
+October 10, 2022
+
 ## Overview
 
 Lab 09 has us creating a web browser game using a combination of HTML, CSS, and JavaScript (mostly JavaScript).
@@ -8,6 +11,12 @@ bouncy balls that move around the screen and bounce back after touching any edge
 another class that creates a user-controlled ball that "eats" the other bouncy balls when a collision occurs
 between them.
 
+## How to Run
+
+To run the project in VSCode, simply install the Live Preview and Live Server extensions and then go to the
+command bar at the top of the IDE. Click on the bar and type in "Live Preview: Start Server". A side window
+should appear with your program running in a simulated browser. To better view the project while running 
+the server, copy and paste the url in the side window into your own web browser.
 
 ## Sources and Credits
 
